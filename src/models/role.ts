@@ -1,11 +1,11 @@
 import { BaseModel } from '@models/base.model';
 import { DataTypes } from 'sequelize';
 import { sequelize } from '@configs/database';
-import { Company } from './company';
 
 export class Role extends BaseModel<AUTH.IRole> implements AUTH.IRole {
   public name!: string;
-  public companyId!: string;
+  public key!: string;
+  public description?: string;
 }
 
 Role.init(
@@ -20,13 +20,14 @@ Role.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    companyId: {
-      type: DataTypes.UUIDV4,
+    key: {
+      type: DataTypes.STRING,
       allowNull: false,
-      references: {
-        model: 'companies',
-        key: 'id',
-      },
+      unique: true,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true, // Optional field
     },
   },
   {
@@ -35,10 +36,3 @@ Role.init(
     modelName: 'Role',
   },
 );
-
-// Associations can be defined here if needed
-Role.belongsTo(Company, {
-  as: 'company',
-  foreignKey: 'companyId',
-  targetKey: 'id',
-});

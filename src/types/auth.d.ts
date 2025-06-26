@@ -10,7 +10,8 @@ declare namespace AUTH {
 
   interface IRole extends IBase {
     name: string;
-    companyId: string;
+    key: string;
+    description?: string;
   }
 
   interface IPassportError {

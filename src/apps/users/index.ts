@@ -5,6 +5,6 @@ import { addUser } from './controllers';
 
 const userRoutes = Router();
 
-userRoutes.post('/', validateReq('userCreating'), addUser);
+userRoutes.post('/', isAuthenticated, validateReq('userCreating'), addUser);
 
 export default userRoutes;

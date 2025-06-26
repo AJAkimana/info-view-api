@@ -34,16 +34,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      companyId: {
-        type: Sequelize.UUID,
-        allowNull: false,
-        references: {
-          model: 'companies',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
