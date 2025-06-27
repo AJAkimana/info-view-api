@@ -26,5 +26,6 @@ export const serviceRules = {
         checkNull: true,
       })
       .isString(),
+    check('params', 'Provide the service parameters').exists().isObject(),
   ],
 };

@@ -15,6 +15,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
       basePath: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -22,6 +27,11 @@ module.exports = {
       serviceType: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      params: {
+        type: Sequelize.JSONB,
+        allowNull: true,
+        defaultValue: {},
       },
     });
   },
