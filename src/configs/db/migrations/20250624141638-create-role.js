@@ -14,15 +14,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      companyId: {
-        type: Sequelize.UUID,
+      key: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: 'companies',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        unique: true,
+      },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
     });
   },

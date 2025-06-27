@@ -20,7 +20,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     // Revert the seed by deleting the demo role
     await queryInterface.bulkDelete('roles', {
-      key: 'admin',
+      key: ['superadmin', 'admin'],
     });
   },
 };
