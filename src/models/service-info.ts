@@ -1,7 +1,6 @@
 import { BaseModel } from '@models/base.model';
 import { DataTypes } from 'sequelize';
 import { sequelize } from '@configs/database';
-import { ServiceParam } from './service-param';
 
 export class ServiceInfo
   extends BaseModel<SF.IServiceInfo>
@@ -10,7 +9,9 @@ export class ServiceInfo
   public name!: string;
   public serviceType!: string;
   public description!: string;
+  public isActive!: boolean;
   public basePath!: string;
+  public params!: SF.IParam;
 }
 
 ServiceInfo.init(
@@ -33,9 +34,19 @@ ServiceInfo.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
+    },
     basePath: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    params: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+      defaultValue: {},
     },
   },
   {
@@ -44,10 +55,3 @@ ServiceInfo.init(
     modelName: 'ServiceInfo',
   },
 );
-
-// Associations can be defined here if needed
-ServiceInfo.hasMany(ServiceParam, {
-  as: 'params',
-  foreignKey: 'serviceId',
-  sourceKey: 'id',
-});

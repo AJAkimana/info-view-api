@@ -3,12 +3,15 @@ declare namespace SF {
     name: string;
     description: string;
     serviceType: string;
+    isActive: boolean;
     basePath: string;
+    params: IParam;
   }
 
-  interface IServiceParam extends IBase {
-    key: string;
-    name: string;
-    serviceId: string;
+  interface IParam {
+    method: string;
+    body?: any;
+    param?: string;
+    query?: string;
   }
 }
