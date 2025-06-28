@@ -14,7 +14,7 @@ interface IServerResponse<T> {
 }
 
 interface IBase {
-  id: number;
+  id: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -11,7 +11,14 @@ declare namespace SF {
   interface IParam {
     method: string;
     body?: any;
-    param?: string;
+    params?: Record<string, string>[];
     query?: string;
+  }
+
+  interface IServiceInfoQueryOptions extends Partial<IServiceInfo> {}
+
+  interface IProxyRequest {
+    baseUrl: string;
+    headers?: Record<string, string>;
   }
 }

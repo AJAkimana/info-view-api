@@ -1,7 +1,7 @@
 import { Model, Optional } from 'sequelize';
 
 export type BaseAttributes = {
-  id: number;
+  id: string;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -15,7 +15,7 @@ export class BaseModel<
   TAttributes extends BaseAttributes,
   TCreationAttributes extends Partial<TAttributes> = BaseCreationAttributes,
 > extends Model<TAttributes, TCreationAttributes> {
-  public id!: number;
+  public id!: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
