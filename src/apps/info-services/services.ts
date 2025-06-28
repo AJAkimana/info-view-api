@@ -1,3 +1,4 @@
+import { createRecord, fetchAll, fetchOne } from '@db/db-helper';
 import { ServiceInfo } from '@models/service-info';
 
 /**
@@ -13,10 +14,10 @@ export const createOrUpdateServiceInfo = async (data: SF.IServiceInfo) => {
     return ServiceInfo.create(data);
   }
   // Find by id
-  const existing = await ServiceInfo.findByPk(data.id);
+  const existing = await fetchOne(ServiceInfo, { id: data.id });
   if (!existing) {
     // No record found, create new
-    return ServiceInfo.create(data);
+    return createRecord(ServiceInfo, data);
   }
   // Only compare non-common fields, ignore id, createdAt, updatedAt
   const ignoreFields = ['id', 'createdAt', 'updatedAt'];
@@ -30,4 +31,16 @@ export const createOrUpdateServiceInfo = async (data: SF.IServiceInfo) => {
     await existing.update(updateData);
   }
   return existing;
+};
+
+export const fetchAllServiceInfos = async (
+  options?: SF.IServiceInfoQueryOptions,
+) => {
+  return fetchAll(ServiceInfo, options);
+};
+
+export const fetchServiceInfo = async (
+  options: SF.IServiceInfoQueryOptions,
+) => {
+  return fetchOne(ServiceInfo, options);
 };
