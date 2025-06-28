@@ -28,9 +28,7 @@ export const setUpUserInfo = async (user: Partial<AUTH.IUser>) => {
   }
 
   const existingUser = await fetchOne(User, {
-    where: {
-      [Op.or]: [{ email: user.email }, { phoneNumber: user.phoneNumber }],
-    },
+    [Op.or]: [{ email: user.email }, { phoneNumber: user.phoneNumber }],
   });
   if (existingUser) {
     throw invalidDataError('Email or phone number already exists');

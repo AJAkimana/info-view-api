@@ -5,6 +5,7 @@ import { hashPassword } from '@libs/utils';
 
 export const addUser = async (req: Request, res: Response) => {
   req.body.password = hashPassword(req.body.password);
+
   const newUser = await setUpUserInfo(req.body);
 
   serverResponse(res, 201, 'Success', newUser);

@@ -6,6 +6,7 @@ export class User extends BaseModel<AUTH.IUser> implements AUTH.IUser {
   public firstName!: string;
   public lastName!: string;
   public email!: string;
+  public roleId!: string;
   public password!: string;
   public isActive!: boolean;
   public phoneNumber!: string;
@@ -31,6 +32,14 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+    },
+    roleId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'roles',
+        key: 'id',
+      },
     },
     password: {
       type: DataTypes.STRING,

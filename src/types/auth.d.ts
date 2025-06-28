@@ -3,6 +3,7 @@ declare namespace AUTH {
     firstName: string;
     lastName: string;
     email: string;
+    roleId: string;
     password: string;
     isActive: boolean;
     phoneNumber: string;

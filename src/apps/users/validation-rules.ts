@@ -26,6 +26,12 @@ export const userRules = {
         checkNull: true,
       })
       .isString(),
+    check('roleId', 'Select the user role')
+      .exists({
+        checkFalsy: true,
+        checkNull: true,
+      })
+      .isUUID(),
     check('phoneNumber', 'Give a phone number')
       .exists({
         checkFalsy: true,
