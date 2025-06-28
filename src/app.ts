@@ -29,6 +29,7 @@ app.use(express.json({ limit: '100mb' }));
 /**
  * Initialize passport and session
  */
+app.set('trust proxy', 1);
 app.use(session());
 app.use(passport.initialize());
 app.use(passport.session());

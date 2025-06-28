@@ -23,10 +23,9 @@ export const corseOptions: CorsOptions = {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       // Allow requests with no origin (like mobile apps or Postman)
       return callback(null, true);
-    } else {
-      // Reject requests from other origins
-      return callback(new Error('Not allowed by CORS'));
     }
+    // Reject requests from other origins
+    return callback(new Error('Not allowed by CORS'));
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: [
