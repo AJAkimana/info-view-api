@@ -20,9 +20,17 @@ export const validateReq =
       return next();
     }
 
-    console.log(errors);
+    const { msg, errors: errorDetails } = errors.array().reduce(
+      // @ts-ignore
+      (acc, { msg, path }) => {
+        acc.errors.push({ field: path, msg });
+        acc.msg += `{${msg}}. `;
+        return acc;
+      },
+      { msg: '', errors: [] as any[] } as Record<string, any>,
+    );
 
-    serverResponse(res, 400, 'Validation error');
+    serverResponse(res, 400, msg, errorDetails);
   };
 
 export const errorHandler = (
