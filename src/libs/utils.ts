@@ -1,3 +1,4 @@
+import { Method } from 'axios';
 import bcrypt from 'bcryptjs';
 
 export const hashPassword = (password: string) => {
@@ -19,4 +20,34 @@ export const compareTwoObjects = (current: any, newObj: any) => {
     }
   });
   return { hasDifferent, newObject };
+};
+
+export const buildServerReq = (serviceInfo: SF.IServiceInfo, body: any) => {
+  const { basePath, params } = serviceInfo;
+  let url = '';
+
+  const proxyReq: SF.IProxyRequest = {
+    baseUrl: basePath,
+  };
+
+  if (params.params) {
+    params.params.forEach((param) => {
+      if (body[param.key]) {
+        url += `/${body[param.key]}`;
+      }
+    });
+  }
+
+  if (params.query) {
+    url += `?${params.query}`;
+  }
+
+  const method = (params.method || 'GET') as Method;
+
+  return {
+    proxyReq,
+    method,
+    data: params.body || undefined,
+    url,
+  };
 };
