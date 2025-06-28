@@ -20,15 +20,8 @@ export const validateReq =
       return next();
     }
 
-    const { msg, errors: errorDetails } = errors.array().reduce(
-      // @ts-ignore
-      (acc, { msg, path }) => {
-        acc.errors.push({ field: path, msg });
-        acc.msg += `{${msg}}. `;
-        return acc;
-      },
-      { msg: '', errors: [] as any[] } as Record<string, any>,
-    );
+    const errorDetails = errors.array();
+    const msg = errorDetails[0].msg || 'Validation failed';
 
     serverResponse(res, 400, msg, errorDetails);
   };
@@ -43,7 +36,7 @@ export const errorHandler = (
     console.log('Internal Server error', err.stack);
   }
   const message = err.message || 'Something went wrong';
-  const statusCode = res.statusCode ? res.statusCode : 500;
+  const statusCode = res.statusCode || 500;
 
   serverResponse(res, statusCode, message);
 };
