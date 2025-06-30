@@ -8,6 +8,7 @@ import { corseOptions, applySecurity } from '@configs/security';
 import appRoutes from './apps';
 import { errorHandler } from './apps/app/middlewares';
 import { initializeDatabase } from '@configs/database';
+import { serverResponse } from '@libs/server';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,7 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
-  res.send('Hello from TypeScript Express!');
+  serverResponse(res, 200, 'Welcome to the Info View API');
 });
 
 /**
