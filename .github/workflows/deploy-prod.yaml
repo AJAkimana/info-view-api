@@ -59,4 +59,3 @@ jobs:
             echo "Build the project"
             yarn build
             echo "Restart the server"
-            pm2 restart 2
