@@ -4,7 +4,7 @@ import passport from '@configs/passport-config';
 import cors from 'cors';
 import 'dotenv/config';
 import { session } from '@configs/session';
-import { corseOptions, applySecurity } from '@configs/security';
+import { corsOptions, applySecurity } from '@configs/security';
 import appRoutes from './apps';
 import { errorHandler } from './apps/app/middlewares';
 import { initializeDatabase } from '@configs/database';
@@ -15,7 +15,7 @@ const PORT = process.env.PORT ?? 3000;
 
 initializeDatabase();
 
-app.use(cors(corseOptions));
+app.use(cors(corsOptions));
 applySecurity(app);
 app.use(compression());
 app.use(

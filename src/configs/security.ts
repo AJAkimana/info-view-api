@@ -21,7 +21,7 @@ export const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:49631',
 ];
-export const corseOptions: CorsOptions = {
+export const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       // Allow requests with no origin (like mobile apps or Postman)
