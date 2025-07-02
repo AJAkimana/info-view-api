@@ -22,6 +22,18 @@ export const getServiceInfos = async (req: Request, res: Response) => {
   serverResponse(res, 200, 'Success', serviceInfos);
 };
 
+export const getServiceDetails = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) {
+    throw invalidDataError(`Service ID is required`);
+  }
+  const serviceInfo = await fetchServiceInfo({ id });
+  if (!serviceInfo) {
+    throw invalidDataError(`Service not found or not configured`);
+  }
+  serverResponse(res, 200, 'Success', serviceInfo);
+};
+
 export const getInfo = async (req: Request, res: Response) => {
   const { params, serviceId } = req.body;
 

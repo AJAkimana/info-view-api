@@ -17,7 +17,10 @@ export function applySecurity(app: Express) {
 /**
  * TODO: Allow dev to dev server and production likewise
  */
-export const allowedOrigins = ['http://localhost:3000'];
+export const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:49631',
+];
 export const corseOptions: CorsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
