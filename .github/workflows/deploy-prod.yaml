@@ -50,8 +50,6 @@ jobs:
             git reset --hard
             git checkout main
             git pull origin main
-            echo "Restart the server"
-            nvm use 20
             echo "Install dependencies"
             yarn
             echo "Run migrations and seed the database"
