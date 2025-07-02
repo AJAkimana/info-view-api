@@ -11,7 +11,7 @@ import { initializeDatabase } from '@configs/database';
 import { serverResponse } from '@libs/server';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ?? 3000;
 
 initializeDatabase();
 
@@ -52,3 +52,5 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+export default app;
