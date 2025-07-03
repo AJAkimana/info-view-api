@@ -59,3 +59,5 @@ jobs:
             echo "Build the project"
             yarn build
             echo "Restart the server"
+            pm2 restart 2
+            echo "Deployment completed successfully"
