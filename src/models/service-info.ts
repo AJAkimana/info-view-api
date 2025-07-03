@@ -1,6 +1,7 @@
 import { BaseModel } from '@models/base.model';
 import { DataTypes } from 'sequelize';
 import { sequelize } from '@configs/database';
+import { ServiceLog } from './service-log';
 
 export class ServiceInfo
   extends BaseModel<SF.IServiceInfo>
@@ -61,3 +62,8 @@ ServiceInfo.init(
     modelName: 'ServiceInfo',
   },
 );
+
+ServiceInfo.hasMany(ServiceLog, {
+  foreignKey: 'serviceId',
+  as: 'logs',
+});
