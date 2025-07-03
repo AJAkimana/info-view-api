@@ -3,7 +3,7 @@ import { validationRules } from './validation-rules';
 import { validationResult } from 'express-validator';
 import { serverResponse } from '@libs/server';
 
-type ValidationType = 'userCreating' | 'serviceCreating';
+type ValidationType = 'userCreating' | 'serviceCreating' | 'infoFetching';
 
 export const validateReq =
   (validationType: ValidationType) =>

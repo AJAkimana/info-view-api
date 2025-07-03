@@ -19,6 +19,6 @@ serviceRoutes.post(
 serviceRoutes.get('/:id', getServiceDetails);
 
 serviceRoutes.get('/', getServiceInfos);
-serviceRoutes.post('/info', getInfo);
+serviceRoutes.post('/info', validateReq('infoFetching'), getInfo);
 
 export default serviceRoutes;
