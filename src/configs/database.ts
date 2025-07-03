@@ -8,6 +8,8 @@ export const sequelize = new Sequelize(database, username, password, configs);
 
 export async function initializeDatabase() {
   try {
+    console.log({ username, password, database, configs });
+
     await sequelize.authenticate();
     // For development, you can use sync to create tables based on models
     // Uncomment the line below to sync models with the database
