@@ -3,6 +3,7 @@ import {
   createOrUpdateServiceInfo,
   fetchAllServiceInfos,
   fetchServiceInfo,
+  recordLog,
 } from './services';
 import { serverResponse } from '@libs/server';
 import { fetchInfo } from '../app/services/service-proxy';
@@ -35,18 +36,33 @@ export const getServiceDetails = async (req: Request, res: Response) => {
 };
 
 export const getInfo = async (req: Request, res: Response) => {
-  const { params, serviceId } = req.body;
+  const { params, serviceId, reqInfo } = req.body;
 
+  let serviceInfo: SF.IServiceInfo | null = null;
+  let result = { code: 200, message: 'Success', data: undefined as any };
   if (!serviceId) {
-    throw invalidDataError(`Service ID is required`);
+    result.code = 400;
+    result.message = 'Service ID is required';
   }
-
-  const serviceInfo = await fetchServiceInfo({ id: serviceId });
+  if (serviceId) {
+    serviceInfo = await fetchServiceInfo({ id: serviceId });
+  }
 
   if (!serviceInfo) {
-    throw invalidDataError(`Service not found or not configured`);
+    result.code = 404;
+    result.message = 'Service not found or not configured';
   }
-  const info = await fetchInfo(serviceInfo, params);
+  if (serviceInfo?.isActive) {
+    const info = await fetchInfo(serviceInfo, params);
+    result.data = info;
+  }
+  if (serviceInfo && !serviceInfo.isActive) {
+    result.code = 400;
+    result.message = `Service "${serviceInfo.name}" is not available`;
+  }
+  const { code, message, data } = result;
+  const logPayload = { ...params, code, message };
+  recordLog(serviceId, logPayload, reqInfo);
 
-  serverResponse(res, 200, 'Success', info);
+  serverResponse(res, code, message, data);
 };
