@@ -22,4 +22,12 @@ declare namespace SF {
     baseUrl: string;
     headers?: Record<string, string>;
   }
+
+  interface IServiceLog extends IBase {
+    ipAddress?: string;
+    city?: string;
+    deviceType?: string;
+    serviceId: string;
+    payload: object;
+  }
 }
