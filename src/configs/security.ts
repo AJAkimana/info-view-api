@@ -23,6 +23,8 @@ export const allowedOrigins = [
 ];
 export const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
+    console.log(`CORS request from origin: ${origin}`);
+
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       // Allow requests with no origin (like mobile apps or Postman)
       return callback(null, true);
