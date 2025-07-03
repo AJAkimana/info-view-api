@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import 'dotenv/config';
 
 const env = process.env.NODE_ENV || 'develop';
 const { username, password, database, ...configs } =
@@ -8,7 +9,7 @@ export const sequelize = new Sequelize(database, username, password, configs);
 
 export async function initializeDatabase() {
   try {
-    console.log({ username, password, database, configs });
+    console.log({ env, username, password, database, configs });
 
     await sequelize.authenticate();
     // For development, you can use sync to create tables based on models
