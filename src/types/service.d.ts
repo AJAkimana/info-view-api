@@ -6,6 +6,7 @@ declare namespace SF {
     isActive: boolean;
     basePath: string;
     params: IParam;
+    hiddenParams: string[];
   }
 
   interface IParam {

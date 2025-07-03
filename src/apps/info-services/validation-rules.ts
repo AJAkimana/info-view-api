@@ -27,5 +27,6 @@ export const serviceRules = {
       })
       .isString(),
     check('params', 'Provide the service parameters').exists().isObject(),
+    check('hiddenParams', 'Provide the hidden parameters').optional().isArray(),
   ],
 };

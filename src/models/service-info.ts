@@ -12,6 +12,7 @@ export class ServiceInfo
   public isActive!: boolean;
   public basePath!: string;
   public params!: SF.IParam;
+  public hiddenParams!: string[];
 }
 
 ServiceInfo.init(
@@ -47,6 +48,11 @@ ServiceInfo.init(
       type: DataTypes.JSONB,
       allowNull: true,
       defaultValue: {},
+    },
+    hiddenParams: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true,
+      defaultValue: [],
     },
   },
   {
