@@ -1,5 +1,6 @@
 import { createRecord, fetchAll, fetchOne } from '@db/db-helper';
 import { ServiceInfo } from '@models/service-info';
+import { ServiceLog } from '@models/service-log';
 
 /**
  * Create a new ServiceInfo or update if it already exists (by id).
@@ -43,4 +44,16 @@ export const fetchServiceInfo = async (
   options: SF.IServiceInfoQueryOptions,
 ) => {
   return fetchOne(ServiceInfo, options);
+};
+
+export const recordLog = async (
+  serviceId: string,
+  payload: object,
+  reqInfo: Partial<SF.IServiceLog>,
+) => {
+  return createRecord(ServiceLog, {
+    serviceId,
+    payload,
+    ...reqInfo,
+  });
 };
