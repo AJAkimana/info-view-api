@@ -8,6 +8,7 @@ const queryOptions = {
   port: process.env.DB_PORT,
   dialect: process.env.DB_DIALECT,
   seederStorage: 'sequelize',
+  logging: false,
 };
 module.exports = {
   develop: {
