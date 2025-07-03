@@ -7,12 +7,12 @@ export const fetchInfo = async (
   dataBody: any,
 ) => {
   const { proxyReq, method, url } = buildServerReq(serviceInfo, dataBody);
-  const { data, message, success } = (await makeRequest(
+  const { data, message, success } = await makeRequest<Record<string, any>>(
     proxyReq,
     url,
     method,
     dataBody,
-  )) as { data: Record<string, any>; message: string; success: boolean };
+  );
 
   if (!success) {
     throw internalServerError(message || 'Failed to fetch info');
