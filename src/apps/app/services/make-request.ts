@@ -9,6 +9,7 @@ const baseInstance = (proxyReq: SF.IProxyRequest) => {
       Accept: 'application/json',
       ...proxyReq.headers,
     },
+    signal: AbortSignal.timeout(proxyReq.timeout ?? 10000),
   });
 };
 

@@ -21,6 +21,7 @@ declare namespace SF {
   interface IProxyRequest {
     baseUrl: string;
     headers?: Record<string, string>;
+    timeout?: number;
   }
 
   interface IServiceLog extends IBase {
