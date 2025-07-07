@@ -19,7 +19,7 @@ export function applySecurity(app: Express) {
  */
 export const allowedOrigins = [
   'http://localhost:3000',
-  'http://localhost:57245',
+  'http://localhost:59101',
 ];
 export const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
