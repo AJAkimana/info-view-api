@@ -9,11 +9,19 @@ declare namespace SF {
     hiddenParams: string[];
   }
 
+  interface InfoParam {
+    key: string;
+    name: string;
+    label: string;
+    required?: boolean;
+    type?: string; // e.g., 'string', 'number', 'boolean'
+  }
+
   interface IParam {
     method: string;
-    body?: any;
-    params?: Record<string, string>[];
-    query?: string;
+    body?: InfoParam[];
+    params?: InfoParam[];
+    query?: InfoParam[];
   }
 
   interface IServiceInfoQueryOptions extends Partial<IServiceInfo> {}
