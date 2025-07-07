@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { validationRules } from './validation-rules';
 import { validationResult } from 'express-validator';
 import { serverResponse } from '@libs/server';
+import { BaseError } from '@libs/errors';
 
 type ValidationType = 'userCreating' | 'serviceCreating' | 'infoFetching';
 
@@ -27,7 +28,7 @@ export const validateReq =
   };
 
 export const errorHandler = (
-  err: Error,
+  err: BaseError,
   _req: Request,
   res: Response,
   _next: NextFunction,
@@ -36,7 +37,7 @@ export const errorHandler = (
     console.log('Internal Server error', err.stack);
   }
   const message = err.message || 'Something went wrong';
-  const statusCode = res.statusCode || 500;
+  const statusCode = err.statusCode || 500;
 
   serverResponse(res, statusCode, message);
 };
