@@ -4,14 +4,19 @@ import { internalServerError } from '@libs/errors';
 
 export const fetchInfo = async (
   serviceInfo: SF.IServiceInfo,
-  dataBody: any,
+  dataBody: SF.IDataBody,
 ) => {
-  const { proxyReq, method, url } = buildServerReq(serviceInfo, dataBody);
+  const {
+    proxyReq,
+    method,
+    url,
+    data: bodyData,
+  } = buildServerReq(serviceInfo, dataBody);
   const { data, message, success } = await makeRequest<Record<string, any>>(
     proxyReq,
     url,
     method,
-    dataBody,
+    bodyData,
   );
 
   if (!success) {

@@ -23,8 +23,12 @@ export const compareTwoObjects = (current: any, newObj: any) => {
   return { hasDifferent, newObject };
 };
 
-export const buildServerReq = (serviceInfo: SF.IServiceInfo, body: any) => {
-  const { basePath, params } = serviceInfo;
+export const buildServerReq = (
+  serviceInfo: SF.IServiceInfo,
+  body: SF.IDataBody,
+) => {
+  const { basePath, params, serviceType } = serviceInfo;
+  const { params: bodyParams, reqInfo } = body;
   const errMsg = (paramName = '') => `You need to provide the "${paramName}"`;
   let url = '';
   let infoBody = undefined as any;
@@ -33,14 +37,23 @@ export const buildServerReq = (serviceInfo: SF.IServiceInfo, body: any) => {
     baseUrl: basePath,
   };
 
+  // This is a special case for Network services
+  if (
+    serviceType === 'Network' &&
+    reqInfo.ipAddress &&
+    reqInfo.ipAddress !== '127.0.0.1'
+  ) {
+    url += `/${reqInfo.ipAddress}`;
+  }
+
   // Handle path parameters
   if (params.params) {
     for (const param of params.params) {
-      if (param.required && !body[param.key]) {
+      if (param.required && !bodyParams[param.key]) {
         throw invalidDataError(errMsg(param.name));
       }
-      if (body[param.key]) {
-        url += `/${body[param.key]}`;
+      if (bodyParams[param.key]) {
+        url += `/${bodyParams[param.key]}`;
       }
     }
   }
@@ -49,14 +62,14 @@ export const buildServerReq = (serviceInfo: SF.IServiceInfo, body: any) => {
   if (params.query) {
     const queryParams = params.query
       .filter((param) => {
-        if (param.required && !body[param.key]) {
+        if (param.required && !bodyParams[param.key]) {
           throw invalidDataError(errMsg(param.name));
         }
-        return body[param.key] !== undefined;
+        return bodyParams[param.key] !== undefined;
       })
       .map(
         (param) =>
-          `${encodeURIComponent(param.key)}=${encodeURIComponent(body[param.key])}`,
+          `${encodeURIComponent(param.key)}=${encodeURIComponent(bodyParams[param.key])}`,
       )
       .join('&');
     if (queryParams) {
@@ -68,11 +81,11 @@ export const buildServerReq = (serviceInfo: SF.IServiceInfo, body: any) => {
   if (params.body) {
     infoBody = params.body.reduce(
       (acc, param) => {
-        if (param.required && !body[param.key]) {
+        if (param.required && !bodyParams[param.key]) {
           throw invalidDataError(errMsg(param.name));
         }
-        if (body[param.key] !== undefined) {
-          acc[param.key] = body[param.key];
+        if (bodyParams[param.key] !== undefined) {
+          acc[param.key] = bodyParams[param.key];
         }
         return acc;
       },

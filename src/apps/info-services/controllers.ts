@@ -53,7 +53,7 @@ export const getInfo = async (req: Request, res: Response) => {
     result.message = 'Service not found or not configured';
   }
   if (serviceInfo?.isActive) {
-    const info = await fetchInfo(serviceInfo, params);
+    const info = await fetchInfo(serviceInfo, req.body);
     result.data = info;
   }
   if (serviceInfo && !serviceInfo.isActive) {

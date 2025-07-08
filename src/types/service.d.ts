@@ -39,4 +39,10 @@ declare namespace SF {
     serviceId: string;
     payload: object;
   }
+
+  interface IDataBody {
+    params: Record<string, any>;
+    serviceId: string;
+    reqInfo: Record<string, any>;
+  }
 }
