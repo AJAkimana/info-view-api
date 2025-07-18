@@ -1,28 +1,6 @@
 import { Time } from '@libs/constants/time';
 import expressSession from 'express-session';
-// import { RedisStore } from 'connect-redis';
-// import { createClient } from 'redis';
-// import { ConstantHelper } from '../helpers/ConstantHelper';
-
-// const constants = new ConstantHelper();
-// const redisClient = createClient();
-
-// redisClient
-//   .connect()
-//   .then(() => console.log('Redis connected'))
-//   .catch((error) => {
-//     process.stdout.write(`Redis error: ${error.message}\n`);
-//     process.exit(1);
-//   });
-
-// const redisSessionStore = new RedisStore({
-//   host: process.env.REDIS_HOST,
-//   port: process.env.REDIS_PORT,
-//   prefix: process.env.REDIS_PREFIX,
-//   name: process.env.REDIS_NAME,
-//   pass: process.env.REDIS_SECRET,
-//   client: redisClient,
-// });
+import { redisStore } from './redis-client';
 
 export const session = () =>
   expressSession({
@@ -38,5 +16,5 @@ export const session = () =>
       sameSite: true,
       maxAge: Time.week,
     },
-    // store: redisSessionStore,
+    store: redisStore,
   });
