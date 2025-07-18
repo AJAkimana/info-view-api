@@ -9,11 +9,13 @@ import appRoutes from './apps';
 import { errorHandler } from './apps/app/middlewares';
 import { initializeDatabase } from '@configs/database';
 import { serverResponse } from '@libs/server';
+import { initializeRedisClient } from '@configs/redis-client';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 initializeDatabase();
+initializeRedisClient();
 
 app.use(cors(corsOptions));
 applySecurity(app);
