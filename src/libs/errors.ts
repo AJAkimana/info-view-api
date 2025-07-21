@@ -10,6 +10,7 @@ enum ErrorType {
   UnauthorizedError = 'Unauthorized Error',
   DatabaseServiceError = 'Database service error',
   MultipeChoice = 'Multiple choice',
+  RedisError = 'Redis error',
 }
 
 export class BaseError extends Error {
@@ -113,6 +114,20 @@ class DatabaseServiceError extends BaseError {
   }
 }
 
+class RedisError extends BaseError {
+  public type: ErrorType;
+
+  public message: string;
+
+  constructor(message: string = 'Cache error', error?: any) {
+    super();
+    this.type = ErrorType.RedisError;
+    this.statusCode = 500;
+    this.message = message;
+    this.error = error;
+  }
+}
+
 export const forbiddenAccessError = (message?: string) =>
   new ForbiddenAccessError(message);
 export const unauthorizedError = (message?: string) =>
@@ -126,3 +141,5 @@ export const duplicateDataError = (message?: string) =>
   new DuplicateDataError(message);
 export const databaseServiceError = (message?: string, error?: any) =>
   new DatabaseServiceError(message, error);
+export const redisError = (message?: string, error?: any) =>
+  new RedisError(message, error);
