@@ -1,4 +1,5 @@
 declare namespace SF {
+  type ServiceType = 'Vehicle' | 'Person';
   interface IServiceInfo extends IBase {
     name: string;
     description: string;

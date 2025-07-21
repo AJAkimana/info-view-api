@@ -31,6 +31,7 @@ export const buildServerReq = (
   const { params: bodyParams, reqInfo } = body;
   const errMsg = (paramName = '') => `You need to provide the "${paramName}"`;
   let url = '';
+  let cacheKey = '';
   let infoBody = undefined as any;
 
   const proxyReq: SF.IProxyRequest = {
@@ -54,6 +55,7 @@ export const buildServerReq = (
       }
       if (bodyParams[param.key]) {
         url += `/${bodyParams[param.key]}`;
+        cacheKey += bodyParams[param.key];
       }
     }
   }
@@ -67,10 +69,10 @@ export const buildServerReq = (
         }
         return bodyParams[param.key] !== undefined;
       })
-      .map(
-        (param) =>
-          `${encodeURIComponent(param.key)}=${encodeURIComponent(bodyParams[param.key])}`,
-      )
+      .map((param) => {
+        cacheKey += bodyParams[param.key];
+        return `${encodeURIComponent(param.key)}=${encodeURIComponent(bodyParams[param.key])}`;
+      })
       .join('&');
     if (queryParams) {
       url += `?${queryParams}`;
@@ -86,6 +88,7 @@ export const buildServerReq = (
         }
         if (bodyParams[param.key] !== undefined) {
           acc[param.key] = bodyParams[param.key];
+          cacheKey += bodyParams[param.key];
         }
         return acc;
       },
@@ -99,6 +102,7 @@ export const buildServerReq = (
     proxyReq,
     method,
     data: infoBody,
+    cacheKey: `${serviceType}-${cacheKey}`,
     url,
   };
 };
