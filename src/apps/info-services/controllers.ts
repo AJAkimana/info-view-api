@@ -52,17 +52,22 @@ export const getInfo = async (req: Request, res: Response) => {
     result.code = 404;
     result.message = 'Service not found or not configured';
   }
-  if (serviceInfo?.isActive) {
-    const info = await fetchInfo(serviceInfo, req.body);
-    result.data = info;
-  }
   if (serviceInfo && !serviceInfo.isActive) {
     result.code = 400;
     result.message = `Service "${serviceInfo.name}" is not available`;
   }
+  if (serviceInfo?.isActive) {
+    const info = await fetchInfo(serviceInfo, req.body);
+    result.data = info;
+  }
   const { code, message, data } = result;
-  const logPayload = { ...params, code, message };
+  const logPayload = {
+    ...params,
+    code,
+    message,
+    fromCache: data?.fromCache || false,
+  };
   recordLog(serviceId, logPayload, reqInfo);
 
-  serverResponse(res, code, message, data);
+  serverResponse(res, code, message, data?.data);
 };
