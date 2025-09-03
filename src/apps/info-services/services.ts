@@ -12,7 +12,7 @@ import { ServiceLog } from '@models/service-log';
 export const createOrUpdateServiceInfo = async (data: SF.IServiceInfo) => {
   if (!('id' in data) || !data.id) {
     // No id provided, create new
-    return ServiceInfo.create(data);
+    return createRecord(ServiceInfo, data);
   }
   // Find by id
   const existing = await fetchOne(ServiceInfo, { id: data.id });

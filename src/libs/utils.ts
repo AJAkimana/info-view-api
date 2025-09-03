@@ -102,7 +102,7 @@ export const buildServerReq = (
     proxyReq,
     method,
     data: infoBody,
-    cacheKey: `${serviceType}-${cacheKey}`,
+    cacheKey: `${serviceType}-${cacheKey.toUpperCase()}`,
     url,
   };
 };
