@@ -48,7 +48,7 @@ export const fetchInfo = async (
     return { data: cachedData, fromCache: true };
   }
 
-  const { data, message, success } = await makeRequest<Record<string, any>>(
+  let { data, message, success } = await makeRequest<Record<string, any>>(
     proxyReq,
     url,
     method,
@@ -60,6 +60,11 @@ export const fetchInfo = async (
   }
   if (!data) {
     throw internalServerError('No data returned from service');
+  }
+
+  // If dataObjectKey is specified, use it to extract the actual data object
+  if (serviceInfo.dataObjectKey) {
+    data = (data[serviceInfo.dataObjectKey] || {}) as Record<string, any>;
   }
   // Remove any hidden parameters from the response
   serviceInfo.hiddenParams.forEach((param) => {

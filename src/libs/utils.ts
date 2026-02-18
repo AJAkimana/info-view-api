@@ -29,7 +29,15 @@ export const buildServerReq = (
 ) => {
   const { basePath, params, serviceType } = serviceInfo;
   const { params: bodyParams, reqInfo } = body;
+
   const errMsg = (paramName = '') => `You need to provide the "${paramName}"`;
+  const isInvalidKey = (param: SF.InfoParam, key: string) => {
+    if (param.disabled) {
+      bodyParams[key] = `${key.toUpperCase()}-DISABLED`;
+    }
+    return !param.disabled && param.required && !bodyParams[key];
+  };
+
   let url = '';
   let cacheKey = '';
   let infoBody = undefined as any;
@@ -50,7 +58,7 @@ export const buildServerReq = (
   // Handle path parameters
   if (params.params) {
     for (const param of params.params) {
-      if (param.required && !bodyParams[param.key]) {
+      if (isInvalidKey(param, param.key)) {
         throw invalidDataError(errMsg(param.name));
       }
       if (bodyParams[param.key]) {
@@ -64,7 +72,7 @@ export const buildServerReq = (
   if (params.query) {
     const queryParams = params.query
       .filter((param) => {
-        if (param.required && !bodyParams[param.key]) {
+        if (isInvalidKey(param, param.key)) {
           throw invalidDataError(errMsg(param.name));
         }
         return bodyParams[param.key] !== undefined;
@@ -83,7 +91,7 @@ export const buildServerReq = (
   if (params.body) {
     infoBody = params.body.reduce(
       (acc, param) => {
-        if (param.required && !bodyParams[param.key]) {
+        if (isInvalidKey(param, param.key)) {
           throw invalidDataError(errMsg(param.name));
         }
         if (bodyParams[param.key] !== undefined) {
@@ -105,4 +113,27 @@ export const buildServerReq = (
     cacheKey: `${serviceType}-${cacheKey.toUpperCase()}`,
     url,
   };
+};
+
+export const sanitizeServices = (
+  services: SF.IServiceInfo[],
+): SF.IServiceInfo[] => {
+  const toFilter = (param: SF.InfoParam) => !param.disabled;
+  return services.map((service) => {
+    // Remove sequelize metadata
+    const { createdAt, updatedAt, ...rest } = service.toJSON?.() || {};
+    const { params } = service;
+    if (params['query']) {
+      params['query'] = params['query'].filter(toFilter);
+    }
+    if (params['body']) {
+      params['body'] = params['body'].filter(toFilter);
+    }
+    if (params['params']) {
+      params['params'] = params['params'].filter(toFilter);
+    }
+
+    rest.params = params;
+    return rest;
+  });
 };

@@ -14,8 +14,8 @@ export class ServiceInfo
   public basePath!: string;
   public params!: SF.IParam;
   public hiddenParams!: string[];
+  public dataObjectKey!: string;
 }
-
 ServiceInfo.init(
   {
     id: {
@@ -54,6 +54,10 @@ ServiceInfo.init(
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
       defaultValue: [],
+    },
+    dataObjectKey: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

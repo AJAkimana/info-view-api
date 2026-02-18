@@ -17,4 +17,5 @@ interface IBase {
   id: string;
   createdAt?: Date;
   updatedAt?: Date;
+  toJSON?: <T = any>() => T;
 }

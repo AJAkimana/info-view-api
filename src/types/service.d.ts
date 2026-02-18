@@ -8,6 +8,7 @@ declare namespace SF {
     basePath: string;
     params: IParam;
     hiddenParams: string[];
+    dataObjectKey?: string;
   }
 
   interface InfoParam {
@@ -15,6 +16,7 @@ declare namespace SF {
     name: string;
     label: string;
     required?: boolean;
+    disabled?: boolean;
     type?: string; // e.g., 'string', 'number', 'boolean'
   }
 

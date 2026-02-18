@@ -8,6 +8,7 @@ import {
 import { serverResponse } from '@libs/server';
 import { fetchInfo } from '../app/services/service-proxy';
 import { invalidDataError } from '@libs/errors';
+import { sanitizeServices } from '@libs/utils';
 
 export const configureServiceInfo = async (req: Request, res: Response) => {
   const data = req.body;
@@ -20,7 +21,9 @@ export const getServiceInfos = async (req: Request, res: Response) => {
   const options = req.query as SF.IServiceInfoQueryOptions;
   const serviceInfos = await fetchAllServiceInfos(options);
 
-  serverResponse(res, 200, 'Success', serviceInfos);
+  const sanitized = sanitizeServices(serviceInfos);
+
+  serverResponse(res, 200, 'Success', sanitized);
 };
 
 export const getServiceDetails = async (req: Request, res: Response) => {
@@ -32,7 +35,9 @@ export const getServiceDetails = async (req: Request, res: Response) => {
   if (!serviceInfo) {
     throw invalidDataError(`Service not found or not configured`);
   }
-  serverResponse(res, 200, 'Success', serviceInfo);
+  const sanitized = sanitizeServices([serviceInfo]);
+
+  serverResponse(res, 200, 'Success', sanitized[0]);
 };
 
 export const getInfo = async (req: Request, res: Response) => {
