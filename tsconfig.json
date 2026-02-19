@@ -27,23 +27,22 @@
     /* Modules */
     "module": "CommonJS", /* Specify what module code is generated. */
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */
-    "moduleResolution": "node", /* Specify how TypeScript looks up a file from a given module specifier. */
-    "baseUrl": "./", /* Specify the base directory to resolve non-relative module names. */
+    "moduleResolution": "bundler", /* Specify how TypeScript looks up a file from a given module specifier. */
     "paths": {
       "@models/*": [
-        "src/models/*"
+        "./src/models/*"
       ],
       "@configs/*": [
-        "src/configs/*"
+        "./src/configs/*"
       ],
       "@libs/*": [
-        "src/libs/*"
+        "./src/libs/*"
       ],
       "@db/*": [
-        "src/services/db/*",
+        "./src/services/db/*",
       ],
       "@cache/*": [
-        "src/services/cache/*"
+        "./src/services/cache/*"
       ],
     }, /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
@@ -121,9 +120,27 @@
     // "allowUnreachableCode": true,                     /* Disable error reporting for unreachable code. */
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true, /* Skip type checking all .d.ts files. */
+    "types": [
+      "node",
+      "mocha",
+      "chai"
+    ], /* Type declaration files to be included in compilation. */
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node10"
+    }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }
