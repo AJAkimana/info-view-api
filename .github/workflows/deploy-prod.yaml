@@ -32,9 +32,27 @@ jobs:
         # yarn test Enable this line if you want to run tests
         env:
           CI: true
+  build:
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build the project for production
+        run: |
+          yarn build-prod
+
+      - uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "dist.tar.gz"
+          target: "${{ secrets.PROJECT_DIR }}"
+        env:
+          CI: true
 
   deploy:
-    needs: [test]
+    needs: [build]
     runs-on: ubuntu-latest
 
     steps:
@@ -52,8 +70,6 @@ jobs:
             git reset --hard
             git checkout main
             git pull origin main
-            echo "Install dependencies"
-            yarn
             echo "Run migrations and seed the database"
             yarn migrate && yarn seed
             echo "Build the project"

@@ -6,14 +6,17 @@
   "scripts": {
     "test": "mocha",
     "dev": "nodemon",
-    "build": "tsc && tsc-alias",
+    "build": "tsc && tsc-alias && npm run copy-env",
     "migrate": "sequelize-cli db:migrate",
     "migrate:undo": "sequelize-cli db:migrate:undo",
     "migrate:undo:all": "sequelize-cli db:migrate:undo:all",
     "seed": "sequelize-cli db:seed:all",
     "seed:undo": "sequelize-cli db:seed:undo:all",
     "start": "node dist/app.js",
-    "postbuild": "cp src/configs/env-config.js dist/configs/env-config.js"
+    "copy-env": "cp src/configs/env-config.js dist/configs/env-config.js",
+    "deploy": "rm -rf dist && tar zxvf dist.tar.gz",
+    "compress": "tar zcvf dist.tar.gz dist/",
+    "build-prod": "npm run build && npm run compress"
   },
   "repository": {
     "type": "git",
