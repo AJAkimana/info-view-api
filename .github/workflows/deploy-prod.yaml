@@ -65,8 +65,8 @@ jobs:
             git pull origin main
             echo "Run migrations and seed the database"
             yarn migrate && yarn seed
-            echo "Build the project"
-            yarn build
+            echo "Deploying the application"
+            yarn deploy
             echo "Restart the server"
             pm2 restart 2
             echo "Deployment completed successfully"
