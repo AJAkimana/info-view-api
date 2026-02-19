@@ -9,7 +9,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test:
+  build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -30,13 +30,6 @@ jobs:
         run: |
           yarn
         # yarn test Enable this line if you want to run tests
-        env:
-          CI: true
-  build:
-    needs: [test]
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Build the project for production
         run: |
           yarn build-prod
