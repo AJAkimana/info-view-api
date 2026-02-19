@@ -13,7 +13,7 @@
     "seed": "sequelize-cli db:seed:all",
     "seed:undo": "sequelize-cli db:seed:undo:all",
     "start": "node dist/app.js",
-    "copy-env": "cp src/configs/env-config.js dist/configs/env-config.js",
+    "copy-env": "cp src/configs/env-config.js dist/src/configs/env-config.js",
     "deploy": "rm -rf dist && tar zxvf dist.tar.gz",
     "compress": "tar zcvf dist.tar.gz dist/",
     "build-prod": "npm run build && npm run compress"
