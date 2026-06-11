@@ -62,13 +62,15 @@ export const fetchInfo = async (
     throw internalServerError('No data returned from service');
   }
 
+  data = JSON.parse(JSON.stringify(data)); // Ensure data is a plain object and not a complex type like Buffer
+
   // If dataObjectKey is specified, use it to extract the actual data object
-  if (serviceInfo.dataObjectKey) {
+  if (data && serviceInfo.dataObjectKey) {
     data = (data[serviceInfo.dataObjectKey] || {}) as Record<string, any>;
   }
   // Remove any hidden parameters from the response
   serviceInfo.hiddenParams.forEach((param) => {
-    if (data.hasOwnProperty(param)) {
+    if (data?.hasOwnProperty(param)) {
       delete data[param];
     }
   });
