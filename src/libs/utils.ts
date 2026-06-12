@@ -79,7 +79,7 @@ export const buildServerReq = (
       })
       .map((param) => {
         cacheKey += bodyParams[param.key];
-        return `${encodeURIComponent(param.key)}=${encodeURIComponent(bodyParams[param.key])}`;
+        return `${param.key}=${bodyParams[param.key]}`;
       })
       .join('&');
     if (queryParams) {
