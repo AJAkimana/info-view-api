@@ -44,6 +44,10 @@ export const buildServerReq = (
 
   const proxyReq: SF.IProxyRequest = {
     baseUrl: basePath,
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36',
+    },
   };
 
   // This is a special case for Network services
@@ -83,7 +87,7 @@ export const buildServerReq = (
       })
       .join('&');
     if (queryParams) {
-      url += `?${queryParams}`;
+      url += `/?${queryParams}`;
     }
   }
 
