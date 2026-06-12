@@ -47,7 +47,7 @@ export const fetchInfo = async (
   if (cachedData) {
     return { data: cachedData, fromCache: true };
   }
-
+  console.log({ proxyReq, method, url, data: bodyData, cacheKey });
   let { data, message, success } = await makeRequest<Record<string, any>>(
     proxyReq,
     url,

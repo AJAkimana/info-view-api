@@ -58,15 +58,6 @@ export async function makeRequest<T>(
         'Something happened in setting up the request',
       );
     }
-    console.error('Error in makeRequest:', {
-      url,
-      method,
-      data,
-      error: {
-        message: error.message,
-        response: error.response?.data,
-      },
-    });
     return errorRes;
   }
 }
