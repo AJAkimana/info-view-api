@@ -47,7 +47,7 @@ export const fetchInfo = async (
   if (cachedData) {
     return { data: cachedData, fromCache: true };
   }
-  console.log({ proxyReq, method, url, data: bodyData, cacheKey });
+
   let { data, message, success } = await makeRequest<Record<string, any>>(
     proxyReq,
     url,
@@ -61,8 +61,6 @@ export const fetchInfo = async (
   if (!data) {
     throw internalServerError('No data returned from service');
   }
-
-  data = JSON.parse(JSON.stringify(data)); // Ensure data is a plain object and not a complex type like Buffer
 
   // If dataObjectKey is specified, use it to extract the actual data object
   if (data && serviceInfo.dataObjectKey) {

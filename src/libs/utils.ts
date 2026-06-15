@@ -43,7 +43,8 @@ export const buildServerReq = (
   let infoBody = undefined as any;
 
   const proxyReq: SF.IProxyRequest = {
-    baseUrl: basePath,
+    url: new URL(basePath),
+    serviceType: serviceType as SF.ServiceType,
     headers: {
       'User-Agent':
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36',
@@ -87,7 +88,7 @@ export const buildServerReq = (
       })
       .join('&');
     if (queryParams) {
-      url += `/?${queryParams}`;
+      url += `?${queryParams}`;
     }
   }
 
@@ -110,6 +111,7 @@ export const buildServerReq = (
 
   const method = (params.method || 'GET') as Method;
 
+  url = proxyReq.url.pathname + url;
   return {
     proxyReq,
     method,

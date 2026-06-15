@@ -1,15 +1,20 @@
 import axios, { Method } from 'axios';
+import https from 'https';
 import { get } from 'lodash';
 
 const baseInstance = (proxyReq: SF.IProxyRequest) => {
+  const agent = new https.Agent({
+    rejectUnauthorized: false,
+  });
   return axios.create({
-    baseURL: proxyReq.baseUrl,
+    baseURL: proxyReq.url.origin,
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
       ...proxyReq.headers,
     },
     signal: AbortSignal.timeout(proxyReq.timeout ?? 10000),
+    httpsAgent: proxyReq.serviceType === 'Land' ? agent : undefined,
   });
 };
 

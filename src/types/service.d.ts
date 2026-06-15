@@ -1,5 +1,5 @@
 declare namespace SF {
-  type ServiceType = 'Vehicle' | 'Person';
+  type ServiceType = 'Vehicle' | 'Person' | 'Land';
   interface IServiceInfo extends IBase {
     name: string;
     description: string;
@@ -30,7 +30,8 @@ declare namespace SF {
   interface IServiceInfoQueryOptions extends Partial<IServiceInfo> {}
 
   interface IProxyRequest {
-    baseUrl: string;
+    url: URL;
+    serviceType?: ServiceType;
     headers?: Record<string, string>;
     timeout?: number;
   }
